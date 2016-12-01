@@ -20,6 +20,13 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Round
 {
+    const FORFEIT = 0;
+    const ROCK = 1;
+    const PAPER = 2;
+    const SCISSORS = 3;
+    const LIZARD = 4;
+    const SPOCK = 5;
+
     /**
      * The primary key of the round
      *
@@ -72,8 +79,8 @@ class Round
      */
     public function __construct()
     {
-        $this->player_choice = 0;
-        $this->computer_choice = 0;
+        $this->player_choice = self::FORFEIT;
+        $this->computer_choice = self::FORFEIT;
         $this->win = false;
         $this->tie = false;
     }
@@ -144,31 +151,10 @@ class Round
     }
 
     /**
-     * @param bool $win
-     * @return Round
-     */
-    public function setWin(bool $win)
-    {
-        $this->win = $win;
-
-        return $this;
-    }
-
-    /**
      * @return bool
      */
     public function isTie() {
         return $this->tie;
-    }
-
-    /**
-     * @param bool $tie
-     * @return $this
-     */
-    public function setTie(bool $tie) {
-        $this->tie = $tie;
-
-        return $this;
     }
 
     /**
@@ -187,6 +173,38 @@ class Round
     public function prePersist()
     {
         $this->created_at = new \DateTime();
+
+        $player = $this->getPlayerChoice();
+        $computer = $this->getComputerChoice();
+
+        if ($player === $computer) {
+            // If it's a tie, update the Round and return false (there's no winner)
+            $this->tie = true;
+        } elseif (self::FORFEIT !== $player) {
+            switch ($player) {
+                case self::ROCK:
+                    // Rock crushes Scissors and Lizard
+                    $this->win = (self::SCISSORS === $computer || self::LIZARD === $computer);
+                    break;
+                case self::PAPER:
+                    // Paper covers Rock, disproves Spock
+                    $this->win = (self::ROCK === $computer || self::SPOCK === $computer);
+                    break;
+                case self::SCISSORS:
+                    // Scissors cuts Paper, decapitates Lizard
+                    $this->win = (self::PAPER === $computer || self::LIZARD === $computer);
+                    break;
+                case self::SPOCK:
+                    // Spock smashes scissors, vaporizes Rock
+                    $this->win = (self::SCISSORS === $computer || self::ROCK === $computer);
+                    break;
+                case self::LIZARD:
+                    // Lizard poisons Spock, eats Paper
+                    $this->win = (self::SPOCK === $computer || self::PAPER === $computer);
+                    break;
+            }
+        }
+        // else: If the player did not make a move in time, they lose
     }
 
 
