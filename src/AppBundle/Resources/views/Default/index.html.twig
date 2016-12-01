@@ -1,1 +1,95 @@
-Hello {{ name }}!
+{% extends "::base.html.twig" %}
+
+{% block title -%}
+    Play Rock, Paper, Scissors, Lizard, Spock
+{%- endblock title %}
+
+{% block body %}
+    <div ng-app="app">
+        <div ng-controller="MainController">
+            <figure>
+                <img src="{{ asset("bundles/app/images/Banner_10x3_sticker.png") }}" width="500" height="166" class="img-responsive center-block" alt="Rock Paper Scissors Lizard Spock">
+            </figure>
+            <div ng-if="!started" id="menu-region" class="text-center">
+                <button type="button" ng-click="start()" class="btn btn-lg btn-success">
+                    Play!
+                </button>
+            </div>
+            <div ng-if="started" id="game-region">
+                <div id="countdown-region" class="text-center">
+                    <span ng-if="count == 3" class="countdown">3</span>
+                    <span ng-if="count == 2" class="countdown">2</span>
+                    <span ng-if="count == 1" class="countdown">1</span>
+                </div>
+                <form action="{{ path('turn') }}" method="post" role="form" name="gameForm">
+                    <div data-toggle="buttons">
+                        <div class="row">
+                            <div class="col-xs-6 col-sm-4 col-sm-offset-2">
+                                <label class="btn btn-default">
+                                    <input type="radio" name="choice" value="1" autocomplete="off" title="Rock"> <i class="fa fa-hand-rock-o"></i> <span class="sr-only">Rock</span>
+                                </label>
+                            </div>
+                            <div class="col-xs-6 col-sm-4">
+                                <label class="btn btn-default">
+                                    <input type="radio" name="choice" value="2" autocomplete="off" title="Paper"> <i class="fa fa-hand-paper-o"></i> <span class="sr-only">Paper</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-6 col-sm-4 col-sm-offset-2">
+                                <label class="btn btn-default">
+                                    <input type="radio" name="choice" value="1" autocomplete="off" title="Scissors"> <i class="fa fa-hand-scissors-o"></i> <span class="sr-only">Scissors</span>
+                                </label>
+                            </div>
+                            <div class="col-xs-6 col-sm-4">
+                                <label class="btn btn-default">
+                                    <input type="radio" name="choice" value="1" autocomplete="off" title="Lizard"> <i class="fa fa-hand-lizard-o"></i> <span class="sr-only">Lizard</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-6 col-sm-4 col-sm-offset-4">
+                                <label class="btn btn-default">
+                                    <input type="radio" name="choice" value="1" autocomplete="off" title="Spock"> <i class="fa fa-hand-spock-o"></i> <span class="sr-only">Spock</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock body %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="{{ asset("bundles/app/components/bootstrap/dist/css/bootstrap-theme.min.css") }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset("bundles/app/components/font-awesome/css/font-awesome.min.css") }}">
+{% endblock stylesheets %}
+
+{% block javascripts %}
+    <script src="{{ asset("bundles/app/components/jquery/dist/jquery.min.js") }}"></script>
+    <script src="{{ asset("bundles/app/components/bootstrap/dist/js/bootstrap.js") }}"></script>
+    <script src="{{ asset("bundles/app/components/angular/angular.min.js") }}"></script>
+    <script>
+        angular
+            .module('app', ['ng'])
+            .controller('MainController', function($scope, $interval) {
+                $scope.started = false;
+
+                $scope.start = function() {
+                    $scope.started = true;
+                    $scope.count = 3;
+
+                    // Countdown from 3
+                    $interval(function() {
+                        --$scope.count;
+
+                        if ($scope.count == 0) {
+                            gameForm.submit();
+                        }
+                    }, 1000, 4);
+                }
+            })
+        ;
+    </script>
+{% endblock javascripts %}

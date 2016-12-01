@@ -33,8 +33,9 @@ class DefaultController extends Controller
      *
      * @Route("/", name="turn")
      * @Method("POST")
+     * @Template()
      *
-     * @return RedirectResponse
+     * @return array|RedirectResponse
      */
     public function turnAction(Request $request)
     {
@@ -44,7 +45,7 @@ class DefaultController extends Controller
         $validation = $this->get('validator');
 
         // Get the player's choice from the request body
-        $playerChoice = $request->request->get('choice');
+        $playerChoice = $request->request->get('choice', 0);
         // Set the player's choice
         $round->setPlayerChoice($playerChoice);
 
@@ -58,11 +59,15 @@ class DefaultController extends Controller
 
         if (count($errors) > 0) {
             $this->addFlash('error', (string) $errors);
-        } else {
-            $em->persist($round);
-            $em->flush();
+
+            return $this->redirectToRoute('homepage');
         }
 
-        return $this->redirectToRoute('homepage');
+        $em->persist($round);
+        $em->flush();
+
+        return array(
+          'round' => $round
+        );
     }
 }
