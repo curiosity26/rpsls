@@ -8,6 +8,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Round;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -31,10 +32,29 @@ class StatisticsController extends Controller
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager()->getRepository('AppBundle:Round');
-        $rounds = $em->findAll();
+        $choices = array(
+          Round::ROCK => 'Rock',
+          Round::PAPER => 'Paper',
+          Round::SCISSORS => 'Scissors',
+          Round::LIZARD => 'Lizard',
+          Round::SPOCK => 'Spock',
+          );
+
+        $playerWins = $em->totalPlayerWins();
+        $computerWins = $em->totalComputerWins();
+
+        $plays = array();
+
+        foreach ($choices as $choice => $name) {
+            $plays[$choice]['player'] = $em->totalTimesPlayerPlayed($choice);
+            $plays[$choice]['computer'] = $em->totalTimesComputerPlayed($choice);
+        }
 
         return array(
-          'rounds' => $rounds
+          'playerWins' => $playerWins,
+          'computerWins' => $computerWins,
+          'choices' => $choices,
+          'plays' => $plays
         );
     }
 }

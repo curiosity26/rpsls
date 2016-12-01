@@ -15,7 +15,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Class Round
  * @package AppBundle\Entity
  *
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\Repository\RoundRepository")
  * @ORM\Table(name="round")
  * @ORM\HasLifecycleCallbacks()
  */

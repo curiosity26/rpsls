@@ -18,24 +18,32 @@
         <h1>Game Statistics</h1>
 
         <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-xs-6 win-cell">
+                        <div class="win-count">{{ playerWins }}</div>
+                        <p>Your Wins</p>
+                    </div>
+                    <div class="col-xs-6 win-cell">
+                        <div class="win-count">{{ computerWins }}</div>
+                        <p>Computer Wins</p>
+                    </div>
+                </div>
+            </div>
             <table class="table table-striped table-hover">
                 <thead>
                     <tr>
                         <th></th>
                         <th>You</th>
                         <th>Computer</th>
-                        <th>Win</th>
-                        <th>Tie</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for i, round in rounds %}
+                    {% for choice, counts in plays %}
                         <tr>
-                            <th>Round {{ i + 1 }}</th>
-                            <td>{{ game.choice_icon(round.playerChoice) }} {{ game.choice_name(round.playerChoice) }}</td>
-                            <td>{{ game.choice_icon(round.computerChoice) }} {{ game.choice_name(round.computerChoice) }}</td>
-                            <td>{{ round.win == true ? '<i class="fa fa-check-square-o"></i>' : '<i class="fa fa-square-o"></i>' }}</td>
-                            <td>{{ round.tie == true ? '<i class="fa fa-check-square-o"></i>' : '<i class="fa fa-square-o"></i>' }}</td>
+                            <th>{{ game.choice_icon(choice, ["fa-lg", "fa-fw"]) }} {{ game.choice_name(choice) }}</th>
+                            <td>{{ counts['player'] }}</td>
+                            <td>{{ counts['computer'] }}</td>
                         </tr>
                     {% endfor %}
                 </tbody>
@@ -47,4 +55,21 @@
 {% block stylesheets %}
     <link type="text/css" rel="stylesheet" href="{{ asset('bundles/app/components/bootstrap/dist/css/bootstrap.min.css') }}">
     <link type="text/css" rel="stylesheet" href="{{ asset('bundles/app/components/font-awesome/css/font-awesome.min.css') }}">
+    <style>
+        .win-cell {
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .win-cell:first-of-type {
+            border-right: 1px solid #ddd;
+        }
+
+        .win-count {
+            font-size: 48pt;
+            font-weight: bold;
+            padding: 15px;
+            margin: 15px;
+        }
+    </style>
 {% endblock stylesheets %}
