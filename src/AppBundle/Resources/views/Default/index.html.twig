@@ -14,6 +14,7 @@
                 <button type="button" ng-click="start()" class="btn btn-lg btn-success">
                     Play!
                 </button>
+                <a href="{{ path('stats_index') }}" role="button" class="btn btn-info btn-lg">Game Statistics</a>
             </div>
             <div ng-if="started" id="game-region" ng-cloak>
                 <div id="countdown-region" class="text-center">

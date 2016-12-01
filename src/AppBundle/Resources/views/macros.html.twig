@@ -1,5 +1,3 @@
-{% import _self as _game %}
-
 {% macro choice_name(choice) %}
     {% set forfeit = constant('AppBundle\\Entity\\Round::FORFEIT') %}
     {% set rock = constant('AppBundle\\Entity\\Round::ROCK') %}
@@ -22,7 +20,7 @@
         {% set name = 'forfeit' %}
     {% endif %}
 
-    {{ name }}
+    {{ name|humanize }}
 {% endmacro %}
 
 {% macro choice_icon(choice, classes) %}
