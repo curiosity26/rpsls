@@ -33,6 +33,7 @@ class Round
      *
      * @var int $id
      * @ORM\Id()
+     * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;

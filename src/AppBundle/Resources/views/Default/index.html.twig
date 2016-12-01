@@ -10,50 +10,32 @@
             <figure>
                 <img src="{{ asset("bundles/app/images/Banner_10x3_sticker.png") }}" width="500" height="166" class="img-responsive center-block" alt="Rock Paper Scissors Lizard Spock">
             </figure>
-            <div ng-if="!started" id="menu-region" class="text-center">
+            <div ng-if="!started" id="menu-region" class="text-center" ng-cloak>
                 <button type="button" ng-click="start()" class="btn btn-lg btn-success">
                     Play!
                 </button>
             </div>
-            <div ng-if="started" id="game-region">
+            <div ng-if="started" id="game-region" ng-cloak>
                 <div id="countdown-region" class="text-center">
-                    <span ng-if="count == 3" class="countdown">3</span>
-                    <span ng-if="count == 2" class="countdown">2</span>
-                    <span ng-if="count == 1" class="countdown">1</span>
+                    <span ng-if="count > 0" class="countdown" ng-bind="count"></span>
                 </div>
-                <form action="{{ path('turn') }}" method="post" role="form" name="gameForm">
-                    <div data-toggle="buttons">
-                        <div class="row">
-                            <div class="col-xs-6 col-sm-4 col-sm-offset-2">
-                                <label class="btn btn-default">
-                                    <input type="radio" name="choice" value="1" autocomplete="off" title="Rock"> <i class="fa fa-hand-rock-o"></i> <span class="sr-only">Rock</span>
-                                </label>
-                            </div>
-                            <div class="col-xs-6 col-sm-4">
-                                <label class="btn btn-default">
-                                    <input type="radio" name="choice" value="2" autocomplete="off" title="Paper"> <i class="fa fa-hand-paper-o"></i> <span class="sr-only">Paper</span>
-                                </label>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-xs-6 col-sm-4 col-sm-offset-2">
-                                <label class="btn btn-default">
-                                    <input type="radio" name="choice" value="1" autocomplete="off" title="Scissors"> <i class="fa fa-hand-scissors-o"></i> <span class="sr-only">Scissors</span>
-                                </label>
-                            </div>
-                            <div class="col-xs-6 col-sm-4">
-                                <label class="btn btn-default">
-                                    <input type="radio" name="choice" value="1" autocomplete="off" title="Lizard"> <i class="fa fa-hand-lizard-o"></i> <span class="sr-only">Lizard</span>
-                                </label>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-xs-6 col-sm-4 col-sm-offset-4">
-                                <label class="btn btn-default">
-                                    <input type="radio" name="choice" value="1" autocomplete="off" title="Spock"> <i class="fa fa-hand-spock-o"></i> <span class="sr-only">Spock</span>
-                                </label>
-                            </div>
-                        </div>
+                <form action="{{ path('turn') }}" method="post" role="form" name="gameForm" class="text-center">
+                    <div class="btn-group" data-toggle="buttons">
+                        <label class="btn btn-lg btn-default">
+                            <input type="radio" name="choice" value="1" autocomplete="off" title="Rock"> <i class="fa fa-hand-rock-o fa-lg"></i> <span class="sr-only">Rock</span>
+                        </label>
+                        <label class="btn btn-lg btn-default">
+                            <input type="radio" name="choice" value="2" autocomplete="off" title="Paper"> <i class="fa fa-hand-paper-o fa-lg"></i> <span class="sr-only">Paper</span>
+                        </label>
+                        <label class="btn btn-lg btn-default">
+                            <input type="radio" name="choice" value="1" autocomplete="off" title="Scissors"> <i class="fa fa-hand-scissors-o fa-lg"></i> <span class="sr-only">Scissors</span>
+                        </label>
+                        <label class="btn btn-lg btn-default">
+                            <input type="radio" name="choice" value="1" autocomplete="off" title="Lizard"> <i class="fa fa-hand-lizard-o fa-lg"></i> <span class="sr-only">Lizard</span>
+                        </label>
+                        <label class="btn btn-lg btn-default">
+                            <input type="radio" name="choice" value="1" autocomplete="off" title="Spock"> <i class="fa fa-hand-spock-o fa-lg"></i> <span class="sr-only">Spock</span>
+                        </label>
                     </div>
                 </form>
             </div>
@@ -62,8 +44,18 @@
 {% endblock body %}
 
 {% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="{{ asset("bundles/app/components/angular/angular-csp.css") }}">
     <link rel="stylesheet" type="text/css" href="{{ asset("bundles/app/components/bootstrap/dist/css/bootstrap.min.css") }}">
     <link rel="stylesheet" type="text/css" href="{{ asset("bundles/app/components/font-awesome/css/font-awesome.min.css") }}">
+    <style type="text/css">
+        #countdown-region {
+            font-size: 48pt;
+            font-style: italic;
+            font-weight: bold;
+            height: 2em;
+            padding: 15px;
+        }
+    </style>
 {% endblock stylesheets %}
 
 {% block javascripts %}
@@ -84,6 +76,7 @@
                     $interval(function() {
                         --$scope.count;
 
+                        // Submit the choice when countdown complete
                         if ($scope.count == 0) {
                             gameForm.submit();
                         }
