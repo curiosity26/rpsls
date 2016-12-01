@@ -43,7 +43,7 @@ class Round
      *
      * @var int $playerChoice
      * @ORM\Column(type="integer", options={"unsigned"=true})
-     * @Assert\Range(min="0", max="6", minMessage="round.players_choice.min", maxMessage="round.player_choice.max")
+     * @Assert\Range(min="0", max="5", minMessage="round.players_choice.min", maxMessage="round.player_choice.max")
      */
     private $playerChoice;
 
@@ -52,7 +52,7 @@ class Round
      *
      * @var int $computerChoice
      * @ORM\Column(type="integer", options={"unsigned"=true})
-     * @Assert\Range(min="1", max="6", minMessage="round.computers_choice.min", maxMessage="round.computers_choice.max")
+     * @Assert\Range(min="1", max="5", minMessage="round.computers_choice.min", maxMessage="round.computers_choice.max")
      */
     private $computerChoice;
 
@@ -155,10 +155,30 @@ class Round
     }
 
     /**
+     * @param bool $win
+     * @return $this
+     */
+    public function setWin(bool $win) {
+        $this->win = $win;
+
+        return $this;
+    }
+
+    /**
      * @return bool
      */
     public function isTie() {
         return $this->tie;
+    }
+
+    /**
+     * @param bool $tie
+     * @return $this
+     */
+    public function setTie(bool $tie) {
+        $this->tie = $tie;
+
+        return $this;
     }
 
     /**

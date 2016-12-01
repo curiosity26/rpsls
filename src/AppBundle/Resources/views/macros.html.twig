@@ -1,0 +1,96 @@
+{% import _self as _game %}
+
+{% macro choice_name(choice) %}
+    {% set forfeit = constant('AppBundle\\Entity\\Round::FORFEIT') %}
+    {% set rock = constant('AppBundle\\Entity\\Round::ROCK') %}
+    {% set paper = constant('AppBundle\\Entity\\Round::PAPER') %}
+    {% set scissors = constant('AppBundle\\Entity\\Round::SCISSORS') %}
+    {% set lizard = constant('AppBundle\\Entity\\Round::LIZARD') %}
+    {% set spock = constant('AppBundle\\Entity\\Round::SPOCK') %}
+
+    {% if choice == rock %}
+        {% set name = 'rock' %}
+    {% elseif choice == paper %}
+        {% set name = 'paper' %}
+    {% elseif choice == scissors %}
+        {% set name = 'scissors' %}
+    {% elseif choice == lizard %}
+        {% set name = 'lizard' %}
+    {% elseif choice == spock %}
+        {% set name = 'spock' %}
+    {% else %}
+        {% set name = 'forfeit' %}
+    {% endif %}
+
+    {{ name }}
+{% endmacro %}
+
+{% macro choice_icon(choice, classes) %}
+    {% set forfeit = constant('AppBundle\\Entity\\Round::FORFEIT') %}
+    {% set rock = constant('AppBundle\\Entity\\Round::ROCK') %}
+    {% set paper = constant('AppBundle\\Entity\\Round::PAPER') %}
+    {% set scissors = constant('AppBundle\\Entity\\Round::SCISSORS') %}
+    {% set lizard = constant('AppBundle\\Entity\\Round::LIZARD') %}
+    {% set spock = constant('AppBundle\\Entity\\Round::SPOCK') %}
+
+    {% if choice == rock %}
+        {% set name = 'rock' %}
+    {% elseif choice == paper %}
+        {% set name = 'paper' %}
+    {% elseif choice == scissors %}
+        {% set name = 'scissors' %}
+    {% elseif choice == lizard %}
+        {% set name = 'lizard' %}
+    {% elseif choice == spock %}
+        {% set name = 'spock' %}
+    {% else %}
+        {% set name = 'forfeit' %}
+    {% endif %}
+
+    {% if choice == forfeit %}
+        <i class="{{ classes|default([])|merge([ "fa", "fa-thumbs-o-down" ])|join(" ") }}"></i>
+    {% else %}
+        <i class="{{ classes|default([])|merge([ "fa", "fa-hand-" ~ name ~ "-o" ])|join(" ") }}"></i>
+    {% endif %}
+{% endmacro %}
+
+{% macro outcome(player, computer)  -%}
+    {% set rock = constant('AppBundle\\Entity\\Round::ROCK') %}
+    {% set paper = constant('AppBundle\\Entity\\Round::PAPER') %}
+    {% set scissors = constant('AppBundle\\Entity\\Round::SCISSORS') %}
+    {% set lizard = constant('AppBundle\\Entity\\Round::LIZARD') %}
+    {% set spock = constant('AppBundle\\Entity\\Round::SPOCK') %}
+
+    {# tie #}
+    {% if player == computer %}
+        {{ 'outcome.tie'|trans({}, 'round') }}
+        {# lizard #}
+    {% elseif (player == rock and computer == lizard) or (player == lizard and computer == rock) %}
+        {{ 'outcome.rock_over_lizard'|trans({}, 'round') }}
+    {% elseif (player == rock and computer == scissors) or (player == scissors and computer == rock) %}
+        {{ 'outcome.rock_over_scissors'|trans({}, 'round') }}
+        {# paper #}
+    {% elseif (player == paper and computer == rock) or (player == rock and computer == paper) %}
+        {{ 'outcome.paper_over_rock'|trans({}, 'round') }}
+    {% elseif (player == paper and computer == spock) or (player == spock and computer == paper) %}
+        {{ 'outcome.paper_over_spock'|trans({}, 'round') }}
+        {# scissors #}
+    {% elseif (player == scissors and computer == lizard) or (player == lizard and computer == scissors) %}
+        {{ 'outcome.scissors_over_lizard'|trans({}, 'round') }}
+    {% elseif (player == scissors and computer == paper) or (player == paper and computer == scissors) %}
+        {{ 'outcome.scissors_over_paper'|trans({}, 'round') }}
+        {# lizard #}
+    {% elseif (player == lizard and computer == paper) or (player == paper and computer == lizard) %}
+        {{ 'outcome.lizard_over_paper'|trans({}, 'round') }}
+    {% elseif (player == lizard and computer == spock) or (player == spock and computer == lizard) %}
+        {{ 'outcome.lizard_over_spock'|trans({}, 'round') }}
+        {# spock #}
+    {% elseif (player == spock and computer == rock) or (player == rock and computer == spock) %}
+        {{ 'outcome.spock_over_rock'|trans({}, 'round') }}
+    {% elseif (player == spock and computer == scissors) or (player == scissors and computer == spock) %}
+        {{ 'outcome.spock_over_scissors'|trans({}, 'round') }}
+        {# forfeit #}
+    {% else %}
+        {{ 'outcome.forfeit'|trans({}, 'round') }}
+    {% endif %}
+{%- endmacro %}

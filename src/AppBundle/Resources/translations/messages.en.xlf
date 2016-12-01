@@ -2,19 +2,19 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
     <file source-language="en" datatype="plaintext" original="file.ext">
         <body>
-            <trans-unit id="1">
+            <trans-unit id="round.players_choice.min">
                 <source>round.players_choice.min</source>
                 <target>The player's choice was invalid.</target>
             </trans-unit>
-            <trans-unit id="2">
+            <trans-unit id="round.players_choice.max">
                 <source>round.players_choice.max</source>
                 <target>The player's choice was invalid.</target>
             </trans-unit>
-            <trans-unit id="3">
+            <trans-unit id="round.computers_choice.min">
                 <source>round.computers_choice.min</source>
                 <target>The computer's choice was invalid.</target>
             </trans-unit>
-            <trans-unit id="4">
+            <trans-unit id="round.computers_choice.max">
                 <source>round.computers_choice.max</source>
                 <target>The computer's choice was invalid.</target>
             </trans-unit>

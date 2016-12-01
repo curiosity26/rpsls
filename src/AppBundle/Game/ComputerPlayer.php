@@ -22,6 +22,6 @@ class ComputerPlayer implements PlayerInterface
      * @return int
      */
     public function takeTurn() {
-        return (int) rand(1, 6);
+        return (int) rand(1, 5);
     }
 }

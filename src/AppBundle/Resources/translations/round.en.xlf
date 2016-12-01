@@ -2,45 +2,53 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
     <file source-language="en" datatype="plaintext" original="file.ext">
         <body>
-            <trans-unit id="1">
+            <trans-unit id="outcome.rock_over_scissors">
                 <source>outcome.rock_over_scissors</source>
                 <target>Rock crushes Scissors</target>
             </trans-unit>
-            <trans-unit id="2">
+            <trans-unit id="outcome.rock_over_lizard">
                 <source>outcome.rock_over_lizard</source>
                 <target>Rock crushes Lizard</target>
             </trans-unit>
-            <trans-unit id="3">
+            <trans-unit id="outcome.scissors_over_lizard">
                 <source>outcome.scissors_over_lizard</source>
                 <target>Scissors decapitates Lizard</target>
             </trans-unit>
-            <trans-unit id="4">
+            <trans-unit id="outcome.scissors_over_paper">
                 <source>outcome.scissors_over_paper</source>
                 <target>Scissors cuts Paper</target>
             </trans-unit>
-            <trans-unit id="5">
+            <trans-unit id="outcome.paper_over_rock">
                 <source>outcome.paper_over_rock</source>
                 <target>Paper covers Rock</target>
             </trans-unit>
-            <trans-unit id="6">
+            <trans-unit id="outcome.paper_over_spock">
                 <source>outcome.paper_over_spock</source>
                 <target>Paper disproves Spock</target>
             </trans-unit>
-            <trans-unit id="7">
+            <trans-unit id="outcome.spock_over_rock">
                 <source>outcome.spock_over_rock</source>
                 <target>Spock vaporizes Rock</target>
             </trans-unit>
-            <trans-unit id="8">
+            <trans-unit id="outcome.spock_over_scissors">
                 <source>outcome.spock_over_scissors</source>
                 <target>Spock smashes Scissors</target>
             </trans-unit>
-            <trans-unit id="9">
+            <trans-unit id="outcome.lizard_over_paper">
                 <source>outcome.lizard_over_paper</source>
                 <target>Lizard eats Paper</target>
             </trans-unit>
-            <trans-unit id="10">
+            <trans-unit id="outcome.lizard_over_spock">
                 <source>outcome.lizard_over_spock</source>
                 <target>Lizard poisons Spock</target>
+            </trans-unit>
+            <trans-unit id="outcome.tie">
+                <source>outcome.tie</source>
+                <target>It's a tie!</target>
+            </trans-unit>
+            <trans-unit id="outcome.forfeit">
+                <source>outcome.forfeit</source>
+                <target>You've forfeited your turn</target>
             </trans-unit>
         </body>
     </file>
