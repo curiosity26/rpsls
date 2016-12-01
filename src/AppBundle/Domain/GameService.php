@@ -9,7 +9,7 @@
 namespace AppBundle\Domain;
 
 use AppBundle\Entity\Round;
-use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\EntityManager;
 
 /**
  * Class GameService
@@ -26,15 +26,15 @@ class GameService
     const SPOCK = 5;
 
     /**
-     * @var EntityRepository $em
+     * @var EntityManager $em
      */
     private $em;
 
     /**
      * GameService constructor.
-     * @param EntityRepository $em
+     * @param EntityManager $em
      */
-    public function __construct(EntityRepository $em)
+    public function __construct(EntityManager $em)
     {
         $this->em = $em;
     }
@@ -54,12 +54,17 @@ class GameService
 
         // If the player did not make a move in time, they lose
         if (0 === $player) {
+            // Save the round
+            $this->recordRound($round);
+
             return false;
         }
 
         // If it's a tie, update the Round and return false (there's no winner)
         if ($player === $computer) {
             $round->setTie(true);
+            // Save the round
+            $this->recordRound($round);
 
             return false;
         }
@@ -87,6 +92,22 @@ class GameService
                 break;
         }
 
+        // Save the round
+        $this->recordRound($round);
+
         return $round->isWin();
+    }
+
+    /**
+     * recordRound()
+     * Persists the round to the database
+     *
+     * @param Round $round
+     */
+    private function recordRound(Round $round)
+    {
+        // Record the outcome of the round
+        $this->em->persist($round);
+        $this->em->flush();
     }
 }
