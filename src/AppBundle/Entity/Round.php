@@ -41,7 +41,7 @@ class Round
      * The choice made by the Human Player
      *
      * @var int $playerChoice
-     * @ORM\Column(type="integer", options={unsigned=true})
+     * @ORM\Column(type="integer", options={"unsigned"=true})
      * @Assert\Range(min="0", max="6", minMessage="round.players_choice.min", maxMessage="round.player_choice.max")
      */
     private $playerChoice;
@@ -50,7 +50,7 @@ class Round
      * The choice made by the Computer Player
      *
      * @var int $computerChoice
-     * @ORM\Column(type="integer", options={unsigned=true})
+     * @ORM\Column(type="integer", options={"unsigned"=true})
      * @Assert\Range(min="1", max="6", minMessage="round.computers_choice.min", maxMessage="round.computers_choice.max")
      */
     private $computerChoice;
