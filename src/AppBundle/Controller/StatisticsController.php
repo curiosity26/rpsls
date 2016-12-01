@@ -54,7 +54,7 @@ class StatisticsController extends Controller
           'playerWins' => $playerWins,
           'computerWins' => $computerWins,
           'choices' => $choices,
-          'plays' => $plays
+          'plays' => $plays,
         );
     }
 }

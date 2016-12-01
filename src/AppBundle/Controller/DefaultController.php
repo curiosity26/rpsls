@@ -67,7 +67,7 @@ class DefaultController extends Controller
         $em->flush();
 
         return array(
-          'round' => $round
+          'round' => $round,
         );
     }
 }
