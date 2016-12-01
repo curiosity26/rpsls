@@ -9,6 +9,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class Round
@@ -39,18 +40,20 @@ class Round
     /**
      * The choice made by the Human Player
      *
-     * @var int $player_choice
+     * @var int $playerChoice
      * @ORM\Column(type="integer", options={unsigned=true})
+     * @Assert\Range(min="0", max="6", minMessage="round.players_choice.min", maxMessage="round.player_choice.max")
      */
-    private $player_choice;
+    private $playerChoice;
 
     /**
      * The choice made by the Computer Player
      *
-     * @var int $computer_choice
+     * @var int $computerChoice
      * @ORM\Column(type="integer", options={unsigned=true})
+     * @Assert\Range(min="1", max="6", minMessage="round.computers_choice.min", maxMessage="round.computers_choice.max")
      */
-    private $computer_choice;
+    private $computerChoice;
 
     /**
      * Did the Human Player win?
@@ -69,10 +72,10 @@ class Round
 
     /**
      * The date and time the round occurred, for organization
-     * @var \DateTime $created_at
+     * @var \DateTime $createdAt
      * @ORM\Column(type="datetimetz")
      */
-    private $created_at;
+    private $createdAt;
 
     /**
      * Round constructor.
@@ -109,35 +112,35 @@ class Round
      */
     public function getPlayerChoice()
     {
-        return $this->player_choice;
+        return $this->playerChoice;
     }
 
     /**
      * @param mixed $player_choice
      * @return Round
      */
-    public function setPlayerChoice(int $player_choice)
+    public function setPlayerChoice(int $playerChoice)
     {
-        $this->player_choice = $player_choice;
+        $this->playerChoice = $playerChoice;
 
         return $this;
     }
 
     /**
-     * @return mixed
+     * @return int
      */
     public function getComputerChoice()
     {
-        return $this->computer_choice;
+        return $this->computerChoice;
     }
 
     /**
-     * @param mixed $computer_choice
+     * @param mixed $computerChoice
      * @return Round
      */
-    public function setComputerChoice(int $computer_choice)
+    public function setComputerChoice(int $computerChoice)
     {
-        $this->computer_choice = $computer_choice;
+        $this->computerChoice = $computerChoice;
 
         return $this;
     }
@@ -162,7 +165,7 @@ class Round
      */
     public function getCreatedAt()
     {
-        return $this->created_at;
+        return $this->createdAt;
     }
 
     /**
@@ -172,7 +175,7 @@ class Round
      */
     public function prePersist()
     {
-        $this->created_at = new \DateTime();
+        $this->createdAt = new \DateTime();
 
         $player = $this->getPlayerChoice();
         $computer = $this->getComputerChoice();
