@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Round;
+use AppBundle\Game\ComputerPlayer;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -38,15 +39,29 @@ class DefaultController extends Controller
     public function turnAction(Request $request)
     {
         $round = new Round();
+        $computer = new ComputerPlayer();
         $em = $this->getDoctrine()->getManager();
+        $validation = $this->get('validator');
 
         // Get the player's choice from the request body
         $playerChoice = $request->request->get('choice');
         // Set the player's choice
         $round->setPlayerChoice($playerChoice);
 
-        $em->persist($round);
-        $em->flush();
+        // Get the computer's choice
+        $computerChoice = $computer->takeTurn();
+        // Set the computer's choice
+        $round->setComputerChoice($computerChoice);
+
+        // Validate the $round
+        $errors = $validation->validate($round);
+
+        if (count($errors) > 0) {
+            $this->addFlash('error', (string) $errors);
+        } else {
+            $em->persist($round);
+            $em->flush();
+        }
 
         return $this->redirectToRoute('homepage');
     }
