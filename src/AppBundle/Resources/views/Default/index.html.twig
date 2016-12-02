@@ -26,19 +26,19 @@
                 </div>
                 <form action="{{ path('turn') }}" method="post" role="form" name="gameForm" class="text-center">
                     <div class="btn-group" data-toggle="buttons">
-                        <label class="btn btn-lg btn-default">
+                        <label class="btn btn-lg btn-default" title="Rock">
                             <input type="radio" name="choice" value="{{ constant('AppBundle\\Entity\\Round::ROCK') }}" autocomplete="off" title="Rock"> <i class="fa fa-hand-rock-o fa-lg"></i> <span class="sr-only">Rock</span>
                         </label>
-                        <label class="btn btn-lg btn-default">
+                        <label class="btn btn-lg btn-default" title="Paper">
                             <input type="radio" name="choice" value="{{ constant('AppBundle\\Entity\\Round::PAPER') }}" autocomplete="off" title="Paper"> <i class="fa fa-hand-paper-o fa-lg"></i> <span class="sr-only">Paper</span>
                         </label>
-                        <label class="btn btn-lg btn-default">
+                        <label class="btn btn-lg btn-default" title="Scissors">
                             <input type="radio" name="choice" value="{{ constant('AppBundle\\Entity\\Round::SCISSORS') }}" autocomplete="off" title="Scissors"> <i class="fa fa-hand-scissors-o fa-lg"></i> <span class="sr-only">Scissors</span>
                         </label>
-                        <label class="btn btn-lg btn-default">
+                        <label class="btn btn-lg btn-default" title="Lizard">
                             <input type="radio" name="choice" value="{{ constant('AppBundle\\Entity\\Round::LIZARD') }}" autocomplete="off" title="Lizard"> <i class="fa fa-hand-lizard-o fa-lg"></i> <span class="sr-only">Lizard</span>
                         </label>
-                        <label class="btn btn-lg btn-default">
+                        <label class="btn btn-lg btn-default" title="Spock">
                             <input type="radio" name="choice" value="{{ constant('AppBundle\\Entity\\Round::SPOCK') }}" autocomplete="off" title="Spock"> <i class="fa fa-hand-spock-o fa-lg"></i> <span class="sr-only">Spock</span>
                         </label>
                     </div>
