@@ -3,18 +3,6 @@ MAINTAINER "Alex Boyce <alex@adwave365.com>"
 LABEL version=1.0
 
 ENV APCU_REPO https://github.com/krakjoe/apcu
-ENV SYMFONY__ENV prod
-ENV SYMFONY__DATABASE_DRIVER pdo_mysql
-ENV SYMFONY__DATABASE_HOST localhost
-ENV SYMFONY__DATABASE_PORT 3306
-ENV SYMFONY__DATABASE_NAME rpsls
-ENV SYMFONY__DATABASE_USER rpsls
-ENV SYMFONY__DATABASE_PASSWORD 12345
-ENV SYMFONY__MAILER_TRANSPORT mail
-ENV SYMFONY__MAILER_HOST localhost
-ENV SYMFONY__MAILER_PORT 25
-ENV SYMFONY__LOCALE en
-ENV SYMFONY__SECRET 23498ty834y58934ty398y89f34
 
 RUN apt-get update && \
   apt-get install -y zlib1g-dev libicu-dev g++ libmcrypt-dev git && \
@@ -43,11 +31,10 @@ COPY webserver.conf /etc/apache2/sites-available/
 COPY . /var/www/html/
 WORKDIR /var/www/html/
 
-RUN echo "parameters:" > app/config/parameters.yml
-
 RUN a2enmod rewrite && a2ensite webserver && a2dissite 000-default
 
 RUN mv php.ini /usr/local/etc/php/
+RUN app/console c:c --env=prod
 RUN chown -R www-data:www-data .
 RUN chown -R www-data:www-data app/cache && chmod -R a+wxs app/cache/ && chmod -R a+ws app/logs/
 

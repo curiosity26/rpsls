@@ -1,0 +1,14 @@
+# This file is auto-generated during the composer install
+parameters:
+    database_driver: pdo_mysql
+    database_host: insightsdb.c74kd0wr2ktv.us-east-1.rds.amazonaws.com
+    database_port: null
+    database_name: rpsls
+    database_user: rpsls
+    database_password: d=vMonster26
+    mailer_transport: smtp
+    mailer_host: 127.0.0.1
+    mailer_user: null
+    mailer_password: null
+    locale: en
+    secret: 23498ty834y58934ty398y89f34
