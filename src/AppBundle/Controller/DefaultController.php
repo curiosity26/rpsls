@@ -25,7 +25,12 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-        return array();
+        // Generate a CSRF Token
+        $token = $this->get('form.csrf_provider')->generateCsrfToken('game_token');
+
+        return array(
+          '_token' => $token
+        );
     }
 
     /**
@@ -44,6 +49,15 @@ class DefaultController extends Controller
         $em = $this->getDoctrine()->getManager();
         $validation = $this->get('validator');
 
+        // Get and validate the CSRF Token
+        $token = $request->request->get('_token');
+
+        if (!$this->get('form.csrf_provider')->isCsrfTokenValid('game_token', $token)) {
+            $this->addFlash('danger', 'An error occurred, please play again.');
+
+            return $this->redirectToRoute('homepage');
+        }
+
         // Get the player's choice from the request body
         $playerChoice = $request->request->get('choice', 0);
         // Set the player's choice
@@ -58,7 +72,7 @@ class DefaultController extends Controller
         $errors = $validation->validate($round);
 
         if (count($errors) > 0) {
-            $this->addFlash('error', (string) $errors);
+            $this->addFlash('danger', (string) $errors);
 
             return $this->redirectToRoute('homepage');
         }
@@ -67,7 +81,7 @@ class DefaultController extends Controller
         $em->flush();
 
         return array(
-          'round' => $round,
+          'round' => $round
         );
     }
 }
