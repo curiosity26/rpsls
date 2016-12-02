@@ -45,3 +45,7 @@ fabric.properties
 
 # Ignore the parameters file
 app/config/parameters.yml
+!.gitignore# Elastic Beanstalk Files
+.elasticbeanstalk/*
+.git
+.gitignore

@@ -41,6 +41,9 @@ RUN mkdir -p /var/log/apache
 
 COPY webserver.conf /etc/apache2/sites-available/
 COPY . /var/www/html/
+COPY vendor /var/www/html/
+COPY bin /var/www/html/
+COPY app/bootstrap.php.cache /var/www/html/app/
 WORKDIR /var/www/html/
 
 RUN echo "parameters:" > app/config/parameters.yml
